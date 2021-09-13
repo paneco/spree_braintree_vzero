@@ -46,7 +46,8 @@ module Spree
         end
 
         def address_data(address_type, target)
-          address = target.send("#{address_type}_address")
+          # when user is a Guest she don't have an address yet, so we take it from order
+          address = target.send("#{address_type}_address") || order.send("#{address_type}_address")
           country = address.country
 
           {
